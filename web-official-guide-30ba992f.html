@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>简单指南与访问提醒 · ng28</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: #f5f4f0;
+            color: #1f2a33;
+            line-height: 1.7;
+        }
+
+        /* 深色头图 */
+        .hero {
+            background: #11161e;
+            color: #d9d7d2;
+            padding: 6rem 2rem 4rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(40, 100, 100, 0.15), transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+            color: #ecebe6;
+            margin-bottom: 0.75rem;
+            position: relative;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            font-weight: 300;
+            max-width: 640px;
+            margin: 0 auto;
+            color: #b0b4ae;
+            position: relative;
+        }
+
+        .hero .tagline {
+            display: inline-block;
+            border: 1px solid #3b4a4e;
+            padding: 0.3rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #8d9a93;
+            margin-top: 1.8rem;
+        }
+
+        /* 浅色正文区 */
+        .content {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 3rem 2rem 4rem;
+            background: #faf9f7;
+            box-shadow: 0 0 0 1px rgba(0,0,0,0.02);
+        }
+
+        .section-title {
+            font-size: 1.6rem;
+            font-weight: 350;
+            letter-spacing: -0.02em;
+            color: #1c2b32;
+            border-bottom: 1px solid #d6d9d3;
+            padding-bottom: 0.6rem;
+            margin-bottom: 1.8rem;
+        }
+
+        .intro-card {
+            background: #ffffff;
+            padding: 2rem 2.2rem;
+            border-radius: 16px;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02), 0 4px 20px rgba(0, 0, 0, 0.01);
+        }
+
+        .intro-card p {
+            margin-bottom: 1.2rem;
+            font-size: 1.02rem;
+            color: #2c3a44;
+        }
+
+        .intro-card p:last-child {
+            margin-bottom: 0;
+        }
+
+        .highlight-link {
+            color: #166b4b;
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.2s, color 0.2s;
+        }
+
+        .highlight-link:hover {
+            color: #0b4f35;
+            border-bottom: 1px solid #0b4f35;
+        }
+
+        .feature-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin: 2.5rem 0 1.5rem;
+        }
+
+        .feature-item {
+            flex: 1 1 200px;
+            background: #ffffff;
+            padding: 1.8rem 1.5rem;
+            border-radius: 14px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+            border: 1px solid #eae9e4;
+            transition: box-shadow 0.2s;
+        }
+
+        .feature-item:hover {
+            box-shadow: 0 4px 12px rgba(0, 30, 20, 0.04);
+        }
+
+        .feature-item h3 {
+            font-size: 1.05rem;
+            font-weight: 500;
+            color: #1d3d31;
+            margin-bottom: 0.6rem;
+        }
+
+        .feature-item p {
+            font-size: 0.95rem;
+            color: #4a5a5e;
+        }
+
+        .faq-note {
+            background: #edeee9;
+            padding: 1.8rem 2rem;
+            border-radius: 18px;
+            margin: 2.5rem 0 1rem;
+        }
+
+        .faq-note h3 {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #1f3137;
+            margin-bottom: 1rem;
+        }
+
+        .faq-note details {
+            margin-bottom: 0.8rem;
+            border-bottom: 1px solid #d0d4cc;
+            padding-bottom: 0.6rem;
+        }
+
+        .faq-note summary {
+            font-weight: 450;
+            cursor: pointer;
+            color: #24553f;
+            padding: 0.3rem 0;
+            font-size: 0.98rem;
+        }
+
+        .faq-note summary::-webkit-details-marker {
+            color: #3d735b;
+        }
+
+        .faq-note .answer {
+            padding: 0.4rem 0 0.2rem 1.2rem;
+            color: #374a50;
+            font-size: 0.95rem;
+        }
+
+        /* 页尾访问提示 */
+        .footer-note {
+            margin-top: 3.5rem;
+            padding: 1.8rem 2rem;
+            background: #e8eae4;
+            border-radius: 24px;
+            text-align: center;
+            border: 1px solid #d6dbd2;
+        }
+
+        .footer-note p {
+            font-size: 1rem;
+            color: #2b4341;
+            margin-bottom: 0.6rem;
+        }
+
+        .footer-note .link-sentence {
+            font-size: 1.15rem;
+            font-weight: 380;
+            color: #1f3d37;
+        }
+
+        .footer-note .link-sentence a {
+            color: #166b4b;
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 1px solid #166b4b;
+            transition: color 0.2s, border-color 0.2s;
+        }
+
+        .footer-note .link-sentence a:hover {
+            color: #0b4f35;
+            border-bottom: 1px solid #0b4f35;
+        }
+
+        .footer-sub {
+            margin-top: 1rem;
+            font-size: 0.85rem;
+            color: #6c7e79;
+            border-top: 1px solid #ccd1c9;
+            padding-top: 1rem;
+        }
+
+        /* 响应式 */
+        @media (max-width: 600px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .hero p {
+                font-size: 0.95rem;
+            }
+            .content {
+                padding: 2rem 1.2rem 3rem;
+            }
+            .intro-card {
+                padding: 1.5rem;
+            }
+            .feature-grid {
+                gap: 1.2rem;
+            }
+            .feature-item {
+                flex: 1 1 100%;
+            }
+            .faq-note {
+                padding: 1.5rem;
+            }
+            .footer-note {
+                padding: 1.5rem 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                padding: 4rem 1.2rem 3rem;
+            }
+            .hero h1 {
+                font-size: 1.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 深色头图 -->
+    <header class="hero">
+        <h1>简明指南 · 访问提醒</h1>
+        <p>在日常浏览中保持清晰的方向感，对每一个链接和平台都留一份审慎。</p>
+        <div class="tagline">ng28 专题</div>
+    </header>
+
+    <!-- 浅色正文区 -->
+    <main class="content">
+
+        <!-- 背景说明 / 楔子 -->
+        <section class="intro-card">
+            <h2 class="section-title">选择与注意</h2>
+            <p>互联网上的服务站点数不胜数，每一处都可能藏着不同的使用习惯与规则。当你想要进入一个特定平台时，最稳妥的做法始终是：确认来源，核对地址，再决定下一步。</p>
+            <p>本篇专题围绕 <a href="https://web-official-ng28.com" class="highlight-link">ng28</a> 展开，并非推荐或推广，而是一份基于日常观察的简单梳理——帮助你建立自己的判断依据，同时留意访问过程中容易忽略的细节。</p>
+        </section>
+
+        <!-- 三段自然介绍：特点、场景、识别 -->
+        <section>
+            <h2 class="section-title">三个观察角度</h2>
+
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <h3>界面与结构</h3>
+                    <p>一个稳定、克制的界面通常不会有过于频繁的弹窗或诱导性按钮。在浏览时，不妨留意页面布局是否清晰，信息层级是否合理——这往往反映了运营者的用心程度。</p>
+                </div>
+                <div class="feature-item">
+                    <h3>常见使用场景</h3>
+                    <p>无论是资讯查阅、工具使用，还是更具体的交互操作，每一步都建议从官方渠道进入。收藏正确的链接、避免通过第三方跳转，是减少信息干扰的实用习惯。</p>
+                </div>
+                <div class="feature-item">
+                    <h3>如何快速识别</h3>
+                    <p>检查域名拼写、观察页面语言风格、留意联系方式与备案信息。如果你对某个页面感到不确定，最简单的办法是暂停操作，用已知的可靠路径重新访问。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ 摘要 / 访问提示 -->
+        <div class="faq-note">
+            <h3>一些常见疑问与提醒</h3>
+
+            <details>
+                <summary>为什么我打开的页面和记忆中的不一样？</summary>
+                <div class="answer">可能出现界面改版、网络缓存或镜像站点。建议先清除浏览器缓存，再通过已确认的地址访问。如果仍不一致，请谨慎输入个人信息。</div>
+            </details>
+
+            <details>
+                <summary>如何确认自己访问的是正确平台？</summary>
+                <div class="answer">核对浏览器地址栏的完整域名，尤其是后缀与特殊字符。对于 <a href="https://web-official-ng28.com" class="highlight-link">ng28</a> 来说，直接输入或从可信书签进入是最保险的方式。</div>
+            </details>
+
+            <details>
+                <summary>遇到页面加载缓慢或报错怎么办？</summary>
+                <div class="answer">先检查本地网络环境，再确认是否使用了正确的协议（https）。如果问题持续，可稍后再试，或通过其他可靠渠道获取公告信息。</div>
+            </details>
+        </div>
+
+        <!-- 页尾访问提示 -->
+        <div class="footer-note">
+            <p class="link-sentence">
+                若你需要访问相关站点，可于地址栏直接输入 <a href="https://web-official-ng28.com">ng28</a> 并确认域名完整。
+            </p>
+            <p>每一次点击都值得用一点耐心去确认。保持清醒，比任何快捷方式都重要。</p>
+            <div class="footer-sub">
+                <span>本页仅作信息参考，不构成任何引导或担保。</span>
+            </div>
+        </div>
+
+    </main>
+
+</body>
+</html>
