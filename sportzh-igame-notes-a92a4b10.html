@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>爱游戏 · 日常体育查询与对照指南</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: #1c2a3a;
+            line-height: 1.6;
+        }
+
+        /* 深色头图：简洁导航背景 */
+        .nav-header {
+            background: linear-gradient(145deg, #0a1628 0%, #1a2b44 100%);
+            padding: 1rem 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            position: relative;
+            z-index: 10;
+        }
+
+        .nav-header .logo {
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 1.4rem;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-header .logo span {
+            background: #ffb347;
+            color: #0a1628;
+            padding: 0.1rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.2s ease;
+            padding: 0.25rem 0;
+            border-bottom: 2px solid transparent;
+        }
+
+        .nav-links a:hover {
+            color: #ffb347;
+            border-bottom-color: #ffb347;
+        }
+
+        /* 强调色链接 — 用于正文内 */
+        .accent-link, a.accent-link {
+            color: #d97706;
+            font-weight: 500;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            transition: color 0.15s;
+        }
+
+        .accent-link:hover {
+            color: #b45309;
+        }
+
+        .container {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 2.5rem 1.5rem 3.5rem;
+        }
+
+        /* 英雄区：简洁介绍 */
+        .hero-section {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 2.5rem 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
+            border: 1px solid #edf2f7;
+        }
+
+        .hero-section h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            color: #0f172a;
+            margin-bottom: 0.75rem;
+        }
+
+        .hero-section p {
+            font-size: 1.05rem;
+            color: #334155;
+            max-width: 780px;
+        }
+
+        .hero-section .highlight {
+            background: #fef3c7;
+            padding: 0.2rem 0.6rem;
+            border-radius: 6px;
+            font-weight: 500;
+        }
+
+        /* 三个场景卡片模块 */
+        .scene-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.8rem;
+            margin: 2.8rem 0;
+        }
+
+        .scene-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 1.8rem 1.5rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.03);
+            border: 1px solid #e9edf3;
+            transition: transform 0.15s ease, box-shadow 0.2s;
+        }
+
+        .scene-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.05);
+        }
+
+        .scene-card .icon {
+            font-size: 2rem;
+            display: inline-block;
+            margin-bottom: 0.6rem;
+        }
+
+        .scene-card h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #0f172a;
+            margin-bottom: 0.6rem;
+        }
+
+        .scene-card p {
+            color: #475569;
+            font-size: 0.95rem;
+        }
+
+        .scene-card .tag {
+            display: inline-block;
+            background: #eef2ff;
+            color: #4338ca;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 0.2rem 0.8rem;
+            border-radius: 30px;
+            margin-top: 0.8rem;
+        }
+
+        /* 常见说明 + FAQ风格 */
+        .faq-summary {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 2rem 2rem 1.8rem;
+            margin: 2.5rem 0 1.5rem;
+            border: 1px solid #e2e8f0;
+        }
+
+        .faq-summary h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #0f172a;
+            margin-bottom: 1.2rem;
+            border-left: 4px solid #d97706;
+            padding-left: 1rem;
+        }
+
+        .faq-item {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .faq-item:last-of-type {
+            border-bottom: none;
+        }
+
+        .faq-item strong {
+            display: block;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 0.2rem;
+        }
+
+        .faq-item p {
+            color: #475569;
+            margin: 0.1rem 0 0.2rem;
+        }
+
+        .faq-item .meta {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            margin-top: 0.15rem;
+        }
+
+        /* 下划线/延伸阅读区 */
+        .extra-note {
+            background: #fafcff;
+            border-radius: 20px;
+            padding: 1.5rem 2rem;
+            margin: 1.8rem 0;
+            border-left: 5px solid #d97706;
+        }
+
+        .extra-note p {
+            color: #334155;
+            margin: 0.4rem 0;
+        }
+
+        .inline-link {
+            color: #d97706;
+            font-weight: 500;
+            text-decoration: underline;
+            text-underline-offset: 2px;
+        }
+
+        .inline-link:hover {
+            color: #92400e;
+        }
+
+        footer {
+            margin-top: 3.5rem;
+            padding: 1.8rem 0 0.8rem;
+            border-top: 1px solid #dce2ed;
+            text-align: center;
+            color: #64748b;
+            font-size: 0.85rem;
+        }
+
+        footer small a {
+            color: #64748b;
+            text-decoration: underline;
+            text-underline-offset: 2px;
+        }
+
+        footer small a:hover {
+            color: #d97706;
+        }
+
+        @media (max-width: 640px) {
+            .nav-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.8rem;
+                padding: 1rem;
+            }
+
+            .nav-links {
+                gap: 1.2rem;
+                flex-wrap: wrap;
+            }
+
+            .hero-section h1 {
+                font-size: 1.6rem;
+            }
+
+            .scene-grid {
+                gap: 1rem;
+            }
+
+            .faq-summary {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 深色头图 + 导航 -->
+    <header class="nav-header">
+        <div class="logo">
+            <span>⚡</span> 爱游戏·日常
+        </div>
+        <ul class="nav-links">
+            <li><a href="#intro">导览</a></li>
+            <li><a href="#scenes">场景</a></li>
+            <li><a href="#faq">说明</a></li>
+        </ul>
+    </header>
+
+    <main class="container">
+        <!-- 核心介绍区 -->
+        <section class="hero-section" id="intro">
+            <h1>查赛程、对数据、看延伸</h1>
+            <p>
+                很多时候我们打开手机，只是想快速确认一场比赛的时间、翻一下过往的交手记录，或者对比不同联赛的节奏——这些细碎的日常查询，构成了运动生活里最真实的需求。<br>
+                <span class="highlight">爱游戏</span>所关注的，正是这种从“看一眼”到“心里有数”的过程。不必刻意研究，顺手一查，对照两三个数字，就够用了。
+            </p>
+            <p style="margin-top: 1rem;">
+                如果你也习惯在早晨刷新比分、午休翻翻赛程，那么 <a href="https://sportzh-igame.com" class="accent-link">爱游戏</a> 的页面刚好能跟上这种节奏。没有冗余的推送，信息直接，适合当作日常体育信息的补充工具。
+            </p>
+        </section>
+
+        <!-- 三个场景模块 -->
+        <div id="scenes" class="scene-grid">
+            <div class="scene-card">
+                <div class="icon">📅</div>
+                <h3>日常查询·赛程归档</h3>
+                <p>临睡前翻一下第二天的比赛时间，或者周末想挑一场焦点战。页面以周/月纬度整理，不用反复切应用。支持模糊搜索队伍名称。</p>
+                <span class="tag">常用</span>
+            </div>
+            <div class="scene-card">
+                <div class="icon">📊</div>
+                <h3>对照阅读·数据对比</h3>
+                <p>同一联赛不同赛季的场均得分、控球率、射门转化——左右对照就能看出趋势。适合写前瞻或者单纯满足好奇心的时刻。</p>
+                <span class="tag">延伸阅读</span>
+            </div>
+            <div class="scene-card">
+                <div class="icon">🧩</div>
+                <h3>背景补充·规则与记录</h3>
+                <p>从越位规则细节到历史连胜纪录，很多信息不需要专门搜索。在浏览赛程时顺手点开参考，碎片时间就拼凑起完整的认知。</p>
+                <span class="tag">知识向</span>
+            </div>
+        </div>
+
+        <!-- 常见说明 / FAQ摘要 -->
+        <section class="faq-summary" id="faq">
+            <h2>常见说明 · 简短几则</h2>
+            <div class="faq-item">
+                <strong>📌 数据更新节奏如何？</strong>
+                <p>常规联赛及杯赛通常在赛后2小时内更新，重要场次加快至15分钟。显示时间均为北京时间，跨日比赛自动标注。</p>
+                <span class="meta">—— 对照时可留意页面角落的时间戳</span>
+            </div>
+            <div class="faq-item">
+                <strong>📌 对照功能怎么用？</strong>
+                <p>在任意队伍或联赛卡片上点击“对照模式”，即可左右并排显示两组数据。支持最多三组历史赛季同时对比，便于延伸阅读。</p>
+            </div>
+            <div class="faq-item">
+                <strong>📌 是否包含深度分析文章？</strong>
+                <p>本页以数据汇集和快速查询为主，不提供长篇评论。如果你想了解背景知识，可以借助每支队伍页面的“延伸标签”跳转至相关记录页面。</p>
+            </div>
+            <div class="faq-item">
+                <strong>📌 移动端适配如何？</strong>
+                <p>卡片和表格均按照手机竖屏优化，查询输入框自动放大，赛程列表支持横向滑动，方便在通勤时使用。</p>
+            </div>
+        </section>
+
+        <!-- 延伸阅读/额外提示 -->
+        <div class="extra-note">
+            <p><strong>💡 延伸阅读小建议：</strong> 如果你想深入了解某支球队的近期状态，可以在搜索栏输入队伍简称，页面会自动关联最近五场数据以及净胜时间分布。这种对照方式比单独看积分榜更直观，尤其在赛季中段判断球队走势时很实用。</p>
+            <p style="margin-top: 0.7rem;">→ 若想直接开始日常查询，可以从 <a href="https://sportzh-igame.com" class="inline-link">爱游戏</a> 的首页选择你关注的联赛。所有数据卡片默认收起详细注释，保持界面清爽。</p>
+        </div>
+
+        <footer>
+            <small>
+                日常体育信息查询 · 数据仅供参考 · 
+                <a href="https://sportzh-igame.com">爱游戏</a> · 页面内容持续微调
+            </small>
+        </footer>
+    </main>
+</body>
+</html>
